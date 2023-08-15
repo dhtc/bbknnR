@@ -250,7 +250,7 @@ RunBBKNN.Seurat <- function(
         cat("Running tSNE...\n")
       }
       # 
-      perplexity <- ncol(x = bbknn$idx) - 1
+      perplexity <- ncol(x = bbknn_out$knn_index) - 1
       tsne <- Rtsne_neighbors(
         # index = bbknn$idx,
         # distance = bbknn$dist,
