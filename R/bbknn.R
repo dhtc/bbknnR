@@ -467,6 +467,7 @@ trimming <- function(cnts, trim) {
 # @param dist A dgCMatrix of pairwise distances
 #
 retrive_knn <- function(dist) {
+  # TODO: fix bug, error when cell i has less than k neighbor
   ncol <- dist@p[2] - dist@p[1]
   nrow <- ncol(x = dist)
   knn_index <- matrix(0L, nrow = nrow, ncol = ncol)
