@@ -230,7 +230,7 @@ RunBBKNN.Seurat <- function(
       }
       umap <- umap(
         X = embeddings,
-        n_neighbors = ncol(x = bbknn$idx),
+        n_neighbors = ncol(x = bbknn_out$knn_index),
         nn_method = bbknn_out$dist,
         set_op_mix_ratio = set_op_mix_ratio,
         local_connectivity = local_connectivity,
