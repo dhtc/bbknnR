@@ -220,7 +220,7 @@ RunBBKNN.Seurat <- function(
   slot(object = bbknn_out$cnts, name = "assay.used") <- assay
   object[[graph_name]] <- bbknn_out$cnts
   if (run_TSNE || run_UMAP) {
-    bbknn <- retrive_knn(dist = bbknn_out$dist)
+    # bbknn <- retrive_knn(dist = bbknn_out$dist) # some bug in this
     if (!is.null(x = seed)) {
       set.seed(seed = seed)
     }
@@ -231,7 +231,7 @@ RunBBKNN.Seurat <- function(
       umap <- umap(
         X = embeddings,
         n_neighbors = ncol(x = bbknn$idx),
-        nn_method = bbknn,
+        nn_method = bbknn_out$dist,
         set_op_mix_ratio = set_op_mix_ratio,
         local_connectivity = local_connectivity,
         min_dist = min_dist,
@@ -249,10 +249,13 @@ RunBBKNN.Seurat <- function(
       if (verbose) {
         cat("Running tSNE...\n")
       }
+      # 
       perplexity <- ncol(x = bbknn$idx) - 1
       tsne <- Rtsne_neighbors(
-        index = bbknn$idx,
-        distance = bbknn$dist,
+        # index = bbknn$idx,
+        # distance = bbknn$dist,
+        X = bbknn_out$dist, # add by dhtc, for fix bug caused by function retrive_knn
+        is_distance = TRUE, # add by dhtc, for fix bug caused by function retrive_knn
         perplexity = perplexity
       )$Y
       colnames(x = tsne) <- paste0(TSNE_key, c(1, 2))
