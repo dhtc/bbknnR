@@ -376,6 +376,8 @@ bbknn_annoy <- function(
   if (trim > 0) {
     out$cnts <- trimming(out$cnts, trim = trim)
   }
+  out$knn_index = knn_index
+  out$knn_dist = knn_dist
   return(out)
 }
 
